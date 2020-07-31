@@ -1,4 +1,0 @@
-{{ $texto }}
-
-
-<?php echo $usuario;
