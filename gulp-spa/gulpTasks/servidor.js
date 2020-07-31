@@ -1,12 +1,26 @@
 const gulp = require('gulp')
-
-function monitorarArquivos(cb) {
-    return cb()
-}
+const webserver = require('gulp-webserver')
+const watch = require('gulp-watch')
+const { appHTML } = require('./app')
 
 function servidor(cb) {
+    return gulp.src('build')
+        .pipe(webserver({
+            port: 8080,
+            open: true,
+            livereload: true,
+        }))
+}
+
+function monitorarArquivos(cb) {
+    watch('src/**/*.html', () => gulp.series('appHTML')())
+    watch('src/**/*.scss', () => gulp.series('appCSS')())
+    watch('src/**/*.js', () => gulp.series('appJS')())
+    watch('src/assetes/imgs/**/*.*', () => gulp.series('appIMG')())
     return cb()
 }
+
+
 
 module.exports = {
     monitorarArquivos,
